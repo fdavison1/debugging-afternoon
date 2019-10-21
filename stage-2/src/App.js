@@ -5,10 +5,10 @@ import ShoppingCart from "./Components/ShoppingCart/ShoppingCart";
 import NavBar from "./Components/NavBar/NavBar";
 
 class App extends Component {
-  constuctor(props) {
-    super(props);
+  constructor(props) {
+    super(props)
     this.state = {
-      products: [],
+      products: ['fred'],
       cart: [],
       showCart: false
     };
@@ -21,17 +21,18 @@ class App extends Component {
       .get("https://practiceapi.devmountain.com/products/")
       .then(response => {
         this.setState({
-          products: response
+          products: response.data
         });
       });
   }
   addToCart(item) {
+    // console.log(typeof item)
     this.setState({
-      cart: item
+      cart: [item, ...this.state.cart]
     });
   }
   removeFromCart(index) {
-    let cartCopy = this.state.products.slice();
+    let cartCopy = this.state.cart.slice();
     cartCopy.splice(index, 1);
     this.setState({
       cart: cartCopy
@@ -49,13 +50,15 @@ class App extends Component {
     }
   }
   render() {
+    // console.log(this.state.cart)
+    // console.log(this.state.products)
     const { products, cart, showCart } = this.state;
     return (
       <div className="App">
         <NavBar navigate={this.navigate} />
         <div className="main-container">
           {showCart ? (
-            <ShoppingCart cart={cart} removeFromCart={this.removeFromCart} />
+            <ShoppingCart shoppingCart={cart} removeFromCart={this.removeFromCart} />
           ) : (
             <StoreFront products={products} addToCart={this.addToCart} />
           )}
