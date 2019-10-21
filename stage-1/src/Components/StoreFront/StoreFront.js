@@ -2,8 +2,13 @@ import React, { Component } from 'react';
 import './StoreFront.css';
 
 class StoreFront extends Component {
+  // constructor(props){
+  //   super(props)
+
+  // }
   render() {
-    let productDisplay = this.props.products.map((element, index) => {
+    console.log(this.props.addToCart)
+    let productDisplay = this.props.products.map((elemnt, index) => {
       return (
         <div className="product-container" key={index}>
           <h2>{elemnt.title}</h2>
@@ -11,6 +16,7 @@ class StoreFront extends Component {
           <h2>{elemnt.desc}</h2>
           <h3>{"$" + elemnt.price + ".00"}</h3>
           <button onClick={() => this.props.addToCart(elemnt)}>Purchase!</button>
+          
         </div>
       )
     })
